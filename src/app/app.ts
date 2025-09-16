@@ -1,12 +1,24 @@
-import { Component, signal } from '@angular/core';
-import { RouterOutlet } from '@angular/router';
+import { Component, OnInit } from '@angular/core';
+import { ApiService } from './services/api';
+import { RouterOutlet } from '@angular/router'; // correct import
+
 
 @Component({
   selector: 'app-root',
-  imports: [RouterOutlet],
-  templateUrl: './app.html',
-  styleUrl: './app.css'
+  templateUrl: './app.html',  // usually AppComponent uses app.component.html
+  styleUrls: ['./app.css'],
+  standalone: true,                     // this is important
+  imports: [RouterOutlet]               // allows <router-outlet> in template
 })
-export class App {
-  protected readonly title = signal('lights-out-fe');
+export class App implements OnInit {
+  message = '';
+
+  constructor(private api: ApiService) {}
+
+  ngOnInit() {
+    this.api.getHello().subscribe({
+      next: (res) => this.message = res.message,
+      error: (err) => this.message = 'Backend not available'
+    });
+  }
 }
