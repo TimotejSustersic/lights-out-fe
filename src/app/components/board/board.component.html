@@ -1,0 +1,24 @@
+<div
+  class="grid gap-1"
+  [style.gridTemplateColumns]="'repeat(' + size() + ', 40px)'"
+  [style.gridTemplateRows]="'repeat(' + size() + ', 40px)'"
+>
+  @for (row of board(); let r = $index; track r) { @for (cell of row; let c = $index; track c) {
+  <button
+    class="w-10 h-10 border relative"
+    [class.bg-yellow-400]="cell === 1"
+    [class.bg-gray-700]="cell === 0"
+    (click)="cellClick.emit({ row: r, col: c })"
+  >
+    <!-- Optional solution step overlay -->
+    @if (solution()) { @for (step of solution()?.steps; let s = $index; track step.order) { @if
+    (step.x === r && step.y === c) {
+    <span
+      class="absolute inset-0 flex items-center justify-center text-xs font-bold text-purple-600"
+    >
+      {{ step.order }}
+    </span>
+    } } }
+  </button>
+  } }
+</div>

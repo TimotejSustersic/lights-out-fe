@@ -1,0 +1,23 @@
+@if (open()) {
+<div class="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50">
+  <div
+    class="p-6 rounded-lg border-1 border-gray-200 shadow-lg w-96 max-w-full text-center flex flex-col gap-4"
+  >
+    @if (loading()) {
+    <div class="text-lg font-medium">Processing...</div>
+    <div
+      class="loader border-4 border-gray-200 border-t-purple-600 rounded-full w-12 h-12 mx-auto animate-spin"
+    ></div>
+    } @else {
+    <div class="text-lg font-medium">✅ Done!</div>
+    <div>Moves: {{ moves() }}</div>
+    } @if (time() !== null) {
+    <div>Time: {{ time() }} ms</div>
+    } @if (loading()) {
+    <button class="btn btn-neutral mt-4" (click)="close.emit()">Cancel</button>
+
+    }@else {
+    <button class="btn btn-primary mt-4" (click)="close.emit()">Reset</button>}
+  </div>
+</div>
+}

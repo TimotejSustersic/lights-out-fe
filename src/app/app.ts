@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { ApiService } from './services/api';
-import { RouterOutlet } from '@angular/router'; // correct import
+import { RouterLink, RouterLinkActive, RouterOutlet } from '@angular/router'; // correct import
 
 
 @Component({
@@ -8,7 +8,7 @@ import { RouterOutlet } from '@angular/router'; // correct import
   templateUrl: './app.html',  // usually AppComponent uses app.component.html
   styleUrls: ['./app.css'],
   standalone: true,                     // this is important
-  imports: [RouterOutlet]               // allows <router-outlet> in template
+  imports: [RouterOutlet, RouterLink, RouterLinkActive]               // allows <router-outlet> in template
 })
 export class App implements OnInit {
   message = '';

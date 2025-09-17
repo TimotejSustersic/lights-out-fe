@@ -1,0 +1,42 @@
+<div class="flex flex-col gap-6 p-6 items-center">
+  <!-- Problem list -->
+  <div class="w-full max-w-xl">
+    <table class="table table-zebra w-full">
+      <thead>
+        <tr>
+          <th>Id</th>
+          <th>Size</th>
+        </tr>
+      </thead>
+      <tbody>
+        @for (p of problems(); track p.id) {
+        <tr class="cursor-pointer hover:bg-base-200" (click)="selectProblem(p)">
+          <td>{{ p.id }}</td>
+          <td>{{ p.grid.length }}x{{ p.grid.length }}</td>
+        </tr>
+        }
+      </tbody>
+    </table>
+  </div>
+
+  <!-- Board -->
+  @if (selectedProblem()) {
+  <app-board
+    [size]="selectedSize()"
+    [board]="board()"
+    [solution]="solution()"
+    (cellClick)="onCellClick($event)"
+  ></app-board>
+
+  <div class="flex gap-4 w-full max-w-md">
+    <button class="btn w-1/2" (click)="resetBoard()">Reset</button>
+    <button class="btn btn-primary w-1/2" (click)="getSolution()">Solve</button>
+  </div>
+  }
+  <app-event-popup
+    [open]="popupOpen()"
+    [moves]="moves()"
+    [loading]="false"
+    (close)="onPopupClose()"
+  ></app-event-popup>
+</div>

@@ -7,6 +7,7 @@
       "type": "firefox",
       "request": "launch",
       "preLaunchTask": "npm: start",
+      "webRoot": "${workspaceFolder}",
       "url": "http://localhost:4200/"
     },
     {
@@ -14,6 +15,7 @@
       "type": "firefox",
       "request": "launch",
       "preLaunchTask": "npm: test",
+      "webRoot": "${workspaceFolder}",
       "url": "http://localhost:9876/debug.html"
     }
   ]
