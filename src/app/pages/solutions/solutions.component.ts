@@ -35,12 +35,13 @@ export class SolutionsComponent {
   /** when user selects a problem */
   selectProblem(problem: Problem) {
     this.selectedProblem.set(problem);
-    this.selectedSize.set(problem.size);
+    this.selectedSize.set(problem.grid[0].length);
     this.board.set(problem.grid.map((r) => [...r]));
     this.solution.set(null);
   }
 
   resetBoard(): void {
+    this.moves.set(0);
     const problem = this.selectedProblem();
     if (problem) {
       this.board.set(problem.grid.map((r) => [...r]));

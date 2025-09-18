@@ -18,6 +18,7 @@ export class ProblemsComponent {
   // message for feedback
   popupOpen = signal(false);
   loading = signal(false);
+  success = signal(true);
 
   constructor(private api: ApiService) {}
 
@@ -56,8 +57,14 @@ export class ProblemsComponent {
       grid: this.board(),
     };
 
-    this.api.createProblem(problem).subscribe(() => {
-      this.loading.set(false);
+    this.api.createProblem(problem).subscribe({
+      next: (result) => {
+        this.loading.set(false);
+      },
+      error: () => {
+        this.success.set(false);
+        this.loading.set(false);
+      },
     });
   }
 
