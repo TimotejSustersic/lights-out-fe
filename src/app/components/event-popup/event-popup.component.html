@@ -1,23 +1,40 @@
 @if (open()) {
-<div class="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50">
+<div class="fixed inset-0 bg-black/50 backdrop-blur-sm flex items-center justify-center z-50">
   <div
-    class="p-6 rounded-lg border-1 border-gray-200 shadow-lg w-96 max-w-full text-center flex flex-col gap-4"
+    class="bg-base-100 p-6 rounded-2xl shadow-2xl w-96 max-w-full text-center flex flex-col gap-5 animate-fadeIn"
   >
     @if (loading()) {
-    <div class="text-lg font-medium">Processing...</div>
-    <div
-      class="loader border-4 border-gray-200 border-t-purple-600 rounded-full w-12 h-12 mx-auto animate-spin"
-    ></div>
+    <div class="flex flex-col items-center gap-4 select-none">
+      <span class="material-symbols-outlined text-5xl text-primary animate-bounce">
+        hourglass_top
+      </span>
+      <p class="text-lg font-semibold">Processing...</p>
+      <div
+        class="loader border-4 border-base-300 border-t-primary rounded-full w-12 h-12 animate-spin"
+      ></div>
+      <button class="btn btn-neutral mt-2 w-full" (click)="close.emit()">Cancel</button>
+    </div>
     } @else {
-    <div class="text-lg font-medium">✅ Done!</div>
-    <div>Moves: {{ moves() }}</div>
-    } @if (time() !== null) {
-    <div>Time: {{ time() }} ms</div>
-    } @if (loading()) {
-    <button class="btn btn-neutral mt-4" (click)="close.emit()">Cancel</button>
+    <div class="flex flex-col items-center gap-4 select-none">
+      @if (sucess()) {
+      <span class="material-symbols-outlined text-5xl text-green-400"> check_circle </span>
+      <p class="text-lg font-semibold">{{ sucessTitle() }}</p>
+      } @else {
+      <span class="material-symbols-outlined text-5xl text-red-500">
+        <span class="material-symbols-outlined"> error </span>
+      </span>
+      <p class="text-lg font-semibold">{{ errorTitle() }}</p>
+      }
 
-    }@else {
-    <button class="btn btn-primary mt-4" (click)="close.emit()">Reset</button>}
+      <div class="flex flex-col gap-2 text-sm">
+        <div class="flex justify-between">
+          <span class="font-medium" [innerHTML]="message()"></span>
+        </div>
+      </div>
+
+      <button class="btn btn-primary mt-3 w-full" (click)="close.emit()">Reset</button>
+    </div>
+    }
   </div>
 </div>
 }

@@ -1,7 +1,6 @@
 <div class="flex flex-col items-center gap-4 p-4">
-  <!-- Grid size dropdown -->
   <select
-    class="select select-bordered w-40"
+    class="select select-bordered w-40 rounded-lg px-3 py-2 shadow-sm transition-colors duration-200 focus:ring-2 focus:ring-primary focus:outline-none hover:border-primary"
     [value]="selectedSize()"
     (change)="onSizeChange($event)"
   >
@@ -10,25 +9,26 @@
     }
   </select>
 
-  <!-- Board -->
   <app-board
     [size]="selectedSize()"
     [board]="board()"
     (cellClick)="onCellClick($event)"
   ></app-board>
 
-  <!-- Buttons -->
-  <div class="flex gap-4 w-full max-w-md">
-    <button class="btn w-1/2" (click)="resetBoard()">Reset</button>
-    <button class="btn btn-primary w-1/2" [disabled]="loading()" (click)="evaluateBoard()">
+  <div class="flex gap-4 w-[500px]">
+    <button class="btn grow" (click)="resetBoard()">Reset</button>
+    <button class="btn btn-primary grow" [disabled]="loading()" (click)="evaluateBoard()">
       @if (loading()) { Evaluating... } @else { Evaluate }
     </button>
   </div>
 
   <app-event-popup
     [open]="popupOpen()"
-    [moves]="3"
     [loading]="loading()"
+    [sucessTitle]="'Success!🎉'"
+    [errorTitle]="'Uh oh!'"
+    [sucess]="popupSuccess()"
+    [message]="popupMessage()"
     (close)="onPopupClose()"
   ></app-event-popup>
 </div>

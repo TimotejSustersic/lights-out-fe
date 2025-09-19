@@ -1,22 +1,26 @@
 <div
-  class="grid gap-1"
-  [style.gridTemplateColumns]="'repeat(' + size() + ', 40px)'"
-  [style.gridTemplateRows]="'repeat(' + size() + ', 40px)'"
+  class="w-[500px] h-[500px] grid p-2 rounded-2xl bg-base-200 shadow-xl"
+  [style.gridTemplateColumns]="'repeat(' + size() + ', 1fr)'"
+  [style.gridTemplateRows]="'repeat(' + size() + ', 1fr)'"
+  [style.gap.px]="size() > 6 ? 2 : size() > 4 ? 4 : 8"
 >
   @for (row of board(); let r = $index; track r) { @for (cell of row; let c = $index; track c) {
   <button
-    class="w-10 h-10 border relative"
+    class="w-full h-full transition-all duration-200 ease-in-out border border-base-300 shadow-sm relative hover:border-gray-600 cursor-pointer"
+    [style.borderRadius.px]="size() > 4 ? 8 : 12"
     [class.bg-yellow-400]="cell === 1"
     [class.bg-gray-700]="cell === 0"
-    (click)="cellClick.emit({ row: r, col: c })"
+    [class.hover:border-yellow-400]="cell === 1"
+    [class.hover:border-gray-700]="cell === 0"
+    (click)="handleCellClick({ row: r, col: c })"
   >
-    <!-- Optional solution step overlay -->
     @if (solution()) { @for (step of solution()?.steps; let s = $index; track step.order) { @if
-    (step.x === r && step.y === c) {
+    (step.x === r && step.y === c && !isCellSolved(r, c)) {
     <span
-      class="absolute inset-0 flex items-center justify-center text-xs font-bold text-purple-600"
+      class="absolute top-1 right-1 w-5 h-5 flex items-center justify-center rounded-full bg-indigo-500 text-white text-xs font-bold shadow"
     >
-      {{ step.order }}
+      <!-- I realized order doesn't matter, but I don't want to remove all this code-->
+      <!-- {{ step.order }} -->
     </span>
     } } }
   </button>

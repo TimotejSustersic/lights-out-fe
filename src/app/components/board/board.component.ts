@@ -18,38 +18,13 @@ export class BoardComponent {
   /** Output: notify parent when a cell is clicked */
   cellClick = output<{ row: number; col: number }>();
 
-  // /** Reset board to initial or empty */
-  // resetBoard() {
-  //   if (this.initialBoard().length) {
-  //     this.board.set(this.initialBoard().map(row => [...row]));
-  //   } else {
-  //     this.board.set(Array.from({ length: this.size() }, () => Array(this.size()).fill(0)));
-  //   }
-  //   this.boardChange.emit(this.board());
-  // }
+  solvedCells = input<{ row: number; col: number }[]>([]);
+  isCellSolved(r: number, c: number): boolean {
+    return this.solvedCells().some((sc) => sc.row === r && sc.col === c);
+  }
+  handleCellClick(event: { row: number; col: number }) {
+    this.solvedCells().push({ row: event.row, col: event.col });
 
-  // /** Toggle cell + neighbors */
-  // toggleCell(row: number, col: number) {
-  //   const newBoard = this.board().map(r => [...r]);
-  //   const toggle = (r: number, c: number) => {
-  //     if (r >= 0 && r < this.size() && c >= 0 && c < this.size()) {
-  //       newBoard[r][c] = newBoard[r][c] === 1 ? 0 : 1;
-  //     }
-  //   };
-  //   toggle(row, col);
-  //   toggle(row - 1, col);
-  //   toggle(row + 1, col);
-  //   toggle(row, col - 1);
-  //   toggle(row, col + 1);
-
-  //   this.board.set(newBoard);
-  //   this.boardChange.emit(newBoard);
-  // }
-
-  // /** Returns solution step number if present */
-  // getSolutionStep(row: number, col: number): number | null {
-  //   if (!this.solution()) return null;
-  //   const step = this.solution()!.find(s => s.x === row && s.y === col);
-  //   return step ? step.order : null;
-  // }
+     this.cellClick.emit({ row: event.row, col: event.col });
+  }
 }

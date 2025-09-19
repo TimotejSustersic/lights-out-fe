@@ -18,7 +18,8 @@ export class ProblemsComponent {
   // message for feedback
   popupOpen = signal(false);
   loading = signal(false);
-  success = signal(true);
+  popupSuccess = signal(true);
+  popupMessage = signal('');
 
   constructor(private api: ApiService) {}
 
@@ -51,18 +52,22 @@ export class ProblemsComponent {
     this.loading.set(true);
     this.popupOpen.set(true);
 
-    const problem: Problem = {
+    const problem: any = {
       id: 0,
+      difficulty: 0,
       size: this.selectedSize(),
       grid: this.board(),
     };
 
     this.api.createProblem(problem).subscribe({
-      next: (result) => {
+      next: (result: CreateProblemResultDTO) => {
+        this.popupSuccess.set(true);
+        this.popupMessage.set("There is a solution. </br> I made " + result.moves + ' moves and it took me ' + result.timeMs + 'ms.');
         this.loading.set(false);
       },
       error: () => {
-        this.success.set(false);
+        this.popupSuccess.set(false);
+        this.popupMessage.set('There is no solution found.');
         this.loading.set(false);
       },
     });

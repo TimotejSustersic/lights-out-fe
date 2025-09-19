@@ -23,8 +23,8 @@ export class ApiService {
     return this.http.get<Problem>(`${this.baseUrl}/problems/${id}`);
   }
 
-  createProblem(problem: Problem): Observable<Problem> {
-    return this.http.post<Problem>(`${this.baseUrl}/problems`, problem);
+  createProblem(problem: Problem): Observable<CreateProblemResultDTO> {
+    return this.http.post<CreateProblemResultDTO>(`${this.baseUrl}/problems`, problem);
   }
 
   // solutions
