@@ -5,25 +5,19 @@ export class ThemeControllerService {
   private themeKey = 'theme';
 
   constructor() {
-    this.loadTheme();
+    this.setTheme(this.getTheme());
   }
 
   toggleTheme() {
-    const current = this.getTheme();
-    const next = current === 'dark' ? 'light' : 'dark';
-    this.setTheme(next);
+    this.setTheme(this.getTheme() === 'dark' ? 'light' : 'dark');
   }
 
   getTheme(): 'light' | 'dark' {
-    return (localStorage.getItem(this.themeKey) as 'light' | 'dark') || 'light';
+    return (localStorage.getItem(this.themeKey) || 'light') as 'light' | 'dark';
   }
 
   setTheme(theme: 'light' | 'dark') {
     localStorage.setItem(this.themeKey, theme);
-    document.documentElement.setAttribute('data-theme', theme); // DaisyUI uses data-theme
-  }
-
-  private loadTheme() {
-    this.setTheme(this.getTheme());
+    document.documentElement.setAttribute('data-theme', theme);
   }
 }

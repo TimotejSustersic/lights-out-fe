@@ -8,12 +8,9 @@ import { SolutionsComponent } from './pages/solutions/solutions.component';
 const routes: Routes = [
   { path: '', redirectTo: '/problems', pathMatch: 'full' },
   { path: 'problems', component: ProblemsComponent },
-  { path: 'solutions', component: SolutionsComponent }
+  { path: 'solutions', component: SolutionsComponent },
 ];
 
 export const appConfig: ApplicationConfig = {
-  providers: [
-    provideRouter(routes),
-    provideHttpClient()
-  ]
+  providers: [provideRouter(routes), provideHttpClient()],
 };

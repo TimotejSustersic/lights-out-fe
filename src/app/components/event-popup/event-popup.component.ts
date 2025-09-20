@@ -8,11 +8,11 @@ import { Component, input, output } from '@angular/core';
 export class EventPopupComponent {
   open = input(false);
   loading = input(false);
-  sucess = input<boolean>(true);
+  success = input<boolean>(true);
 
-  sucessTitle = input<string>("");
-  errorTitle = input<string>("");
-  message = input<string>("");
+  sucessTitle = input<string>('');
+  errorTitle = input<string>('');
+  message = input<string>('');
 
   close = output<void>();
 }

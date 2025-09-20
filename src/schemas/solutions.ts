@@ -1,11 +1,10 @@
-interface SolutionStep {
-  x: number; // index v boardu
+export type SolutionStep = {
+  x: number;
   y: number;
-  order: number;
-}
+};
 
-interface Solution {
+export type Solution = {
   id: number;
   problemId: number;
   steps: SolutionStep[];
-}
+};

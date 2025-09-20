@@ -1,8 +1,7 @@
 @if (open()) {
 <div class="fixed inset-0 bg-black/50 backdrop-blur-sm flex items-center justify-center z-50">
-  <div
-    class="bg-base-100 p-6 rounded-2xl shadow-2xl w-96 max-w-full text-center flex flex-col gap-5 animate-fadeIn"
-  >
+  <div class="bg-base-100 p-6 rounded-2xl shadow-2xl w-96 text-center">
+    <!-- we show loading, success or error -->
     @if (loading()) {
     <div class="flex flex-col items-center gap-4 select-none">
       <span class="material-symbols-outlined text-5xl text-primary animate-bounce">
@@ -12,11 +11,12 @@
       <div
         class="loader border-4 border-base-300 border-t-primary rounded-full w-12 h-12 animate-spin"
       ></div>
+      <!-- cancel button -->
       <button class="btn btn-neutral mt-2 w-full" (click)="close.emit()">Cancel</button>
     </div>
     } @else {
     <div class="flex flex-col items-center gap-4 select-none">
-      @if (sucess()) {
+      @if (success()) {
       <span class="material-symbols-outlined text-5xl text-green-400"> check_circle </span>
       <p class="text-lg font-semibold">{{ sucessTitle() }}</p>
       } @else {
@@ -26,12 +26,13 @@
       <p class="text-lg font-semibold">{{ errorTitle() }}</p>
       }
 
+      <!-- message -->
       <div class="flex flex-col gap-2 text-sm">
         <div class="flex justify-between">
           <span class="font-medium" [innerHTML]="message()"></span>
         </div>
       </div>
-
+      <!-- reset button -->
       <button class="btn btn-primary mt-3 w-full" (click)="close.emit()">Reset</button>
     </div>
     }

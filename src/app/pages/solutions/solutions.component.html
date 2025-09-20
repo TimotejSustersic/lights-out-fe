@@ -1,12 +1,13 @@
 <div class="table gap-6 p-6 items-center">
   <tr>
     <td class="align-top w-[600px]">
+      <!-- DataGrid -->
       <div class="h-full w-full rounded-2xl bg-base-100 shadow-xl overflow-hidden flex flex-col">
         <div class="px-4 py-3 border-b border-base-200">
           <h2 class="text-lg font-semibold">Problems</h2>
         </div>
 
-        <div class="w-full max-w-xl bg-base-200 rounded-xl shadow-lg overflow-hidden">
+        <div class="w-full max-w-xl bg-base-200 rounded-2xl shadow-lg overflow-hidden">
           <table class="table w-full">
             <thead class="bg-base-300 sticky top-0">
               <tr>
@@ -19,7 +20,7 @@
                 <th class="w-52">
                   <div class="flex items-center gap-2">
                     <span class="material-symbols-outlined"> speed </span>
-                    <div class="flex items-center gap-2">Difficulty</div>
+                    Difficulty
                   </div>
                 </th>
                 <th class="w-52">
@@ -32,7 +33,7 @@
               </tr>
             </thead>
           </table>
-          <!-- There are two tables because of scroll on one. doesn't work the same with one. -->
+          <!-- There are two tables because of scroll on the second. doesn't work the same with one. -->
           <div class="overflow-y-auto max-h-[550px] scrollbar-hidden">
             <table class="table w-full">
               <tbody>
@@ -46,13 +47,13 @@
                   <td class="w-52 flex items-center">
                     <span
                       class="w-3 h-3 rounded-full"
-                      [class.bg-green-400]="p.difficulty <= 1"
-                      [class.bg-yellow-400]="p.difficulty > 1 && p.difficulty < 1.5"
-                      [class.bg-red-500]="p.difficulty >= 1.5"
+                      [class.bg-green-400]="p.difficulty <= 0.35"
+                      [class.bg-yellow-400]="p.difficulty > 0.35 && p.difficulty < 0.55"
+                      [class.bg-red-500]="p.difficulty >= 0.55"
                     ></span>
 
                     <span class="ml-2 badge text-xs font-semibold bg-base-100 text-base-content">
-                      {{ p.difficulty <= 1 ? 'Easy' : p.difficulty < 1.5 ? 'Medium' : 'Hard' }}
+                      {{ p.difficulty <= 0.35 ? 'Easy' : p.difficulty < 0.55 ? 'Medium' : 'Hard' }}
                     </span>
                   </td>
                   <td class="w-52">
@@ -77,21 +78,20 @@
 
     <td class="flex flex-col items-center gap-5">
       @if (selectedProblem()) {
-      <div class="flex items-center gap-4 justify-center select-none">
+      <!-- Game -->
+      <div class="flex items-center gap-4 justify-center select-none text-lg font-semibold">
         <div
-          class="flex items-center gap-4 p-3 bg-base-200 rounded-lg shadow-sm w-[100px] justify-center"
+          class="flex items-center p-3 bg-base-200 rounded-xl shadow-sm w-[100px] justify-center"
         >
-          <div class="flex items-center gap-1 text-lg font-semibold">
+          <div class="flex items-center gap-1">
             <span class="material-symbols-outlined text-yellow-400"> schedule </span>
             <span>{{ formattedTime }}</span>
           </div>
         </div>
-        <div
-          class="flex items-center gap-4 p-3 bg-base-200 rounded-lg shadow-sm w-[80px] justify-center"
-        >
-          <div class="flex items-center gap-1 text-lg font-semibold">
+        <div class="flex items-center p-3 bg-base-200 rounded-xl shadow-sm w-[80px] justify-center">
+          <div class="flex items-center gap-1">
             <span class="material-symbols-outlined text-indigo-400"> mouse </span>
-            <span >{{ moves() }}</span>
+            <span>{{ moves() }}</span>
           </div>
         </div>
       </div>
@@ -99,27 +99,31 @@
         [size]="selectedSize()"
         [board]="board()"
         [solution]="solution()"
-        [solvedCells]="solvedCells()"
         (cellClick)="onCellClick($event)"
       ></app-board>
-
+      <!-- Actions -->
       <div class="flex gap-4 w-[500px]">
         <button class="btn grow" (click)="resetBoard()">Reset</button>
         <button class="btn btn-primary grow" (click)="getSolution()">Get solution</button>
       </div>
       } @else {
-      <div class="italic font-semibold m-24 select-none">Select a problem</div>
+      <!-- A placeholder when no problem is selected -->
+      <div
+        class="w-[500px] h-[500px] m-16 flex items-center justify-center rounded-2xl bg-base-200 shadow-xl select-none"
+      >
+        <span class="italic font-semibold text-lg text-base-content/70"> Select a problem </span>
+      </div>
       }
     </td>
   </tr>
 
   <app-event-popup
-    [open]="popupOpen()"
+    [open]="popup().open"
     [loading]="false"
     [sucessTitle]="'Congratulations! You solved it. 🎉'"
     [errorTitle]="'Uh oh!'"
-    [sucess]="popupSuccess()"
-    [message]="popupMessage()"
+    [success]="popup().success"
+    [message]="popup().message"
     (close)="onPopupClose()"
   ></app-event-popup>
 </div>

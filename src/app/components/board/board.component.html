@@ -4,7 +4,8 @@
   [style.gridTemplateRows]="'repeat(' + size() + ', 1fr)'"
   [style.gap.px]="size() > 6 ? 2 : size() > 4 ? 4 : 8"
 >
-  @for (row of board(); let r = $index; track r) { @for (cell of row; let c = $index; track c) {
+  @for (cell of board(); track $index) {
+  <!-- tiles -->
   <button
     class="w-full h-full transition-all duration-200 ease-in-out border border-base-300 shadow-sm relative hover:border-gray-600 cursor-pointer"
     [style.borderRadius.px]="size() > 4 ? 8 : 12"
@@ -12,17 +13,14 @@
     [class.bg-gray-700]="cell === 0"
     [class.hover:border-yellow-400]="cell === 1"
     [class.hover:border-gray-700]="cell === 0"
-    (click)="handleCellClick({ row: r, col: c })"
+    (click)="handleCellClick($index)"
   >
-    @if (solution()) { @for (step of solution()?.steps; let s = $index; track step.order) { @if
-    (step.x === r && step.y === c && !isCellSolved(r, c)) {
+    <!-- dots on tile to present the solution -->
+    @if (solution() && ifCellNeedsAction($index)) {
     <span
       class="absolute top-1 right-1 w-5 h-5 flex items-center justify-center rounded-full bg-indigo-500 text-white text-xs font-bold shadow"
-    >
-      <!-- I realized order doesn't matter, but I don't want to remove all this code-->
-      <!-- {{ step.order }} -->
-    </span>
-    } } }
+    ></span>
+    }
   </button>
-  } }
+  }
 </div>

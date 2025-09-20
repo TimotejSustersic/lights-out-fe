@@ -1,6 +1,8 @@
 <div class="flex flex-col items-center gap-4 p-4">
+  
+  <!-- dropdown -->
   <select
-    class="select select-bordered w-40 rounded-lg px-3 py-2 shadow-sm transition-colors duration-200 focus:ring-2 focus:ring-primary focus:outline-none hover:border-primary"
+    class="select select-bordered w-40 rounded-lg shadow-sm px-3 py-2 transition-colors duration-200 focus:ring-2 focus:ring-primary focus:outline-none hover:border-primary cursor-pointer"
     [value]="selectedSize()"
     (change)="onSizeChange($event)"
   >
@@ -15,20 +17,21 @@
     (cellClick)="onCellClick($event)"
   ></app-board>
 
+  <!-- actions -->
   <div class="flex gap-4 w-[500px]">
-    <button class="btn grow" (click)="resetBoard()">Reset</button>
-    <button class="btn btn-primary grow" [disabled]="loading()" (click)="evaluateBoard()">
-      @if (loading()) { Evaluating... } @else { Evaluate }
+    <button class="btn grow" (click)="onPopupClose()">Reset</button>
+    <button class="btn btn-primary grow" [disabled]="popup().loading" (click)="evaluateBoard()">
+      @if (popup().loading) { Evaluating... } @else { Evaluate }
     </button>
   </div>
 
   <app-event-popup
-    [open]="popupOpen()"
-    [loading]="loading()"
+    [open]="popup().open"
+    [loading]="popup().loading"
     [sucessTitle]="'Success!🎉'"
     [errorTitle]="'Uh oh!'"
-    [sucess]="popupSuccess()"
-    [message]="popupMessage()"
+    [success]="popup().success"
+    [message]="popup().message"
     (close)="onPopupClose()"
   ></app-event-popup>
 </div>

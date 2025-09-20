@@ -1,11 +1,12 @@
 import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { Observable } from 'rxjs';
+import { Solution } from '../../schemas/solutions';
+import { CreateProblemResultDTO, Problem } from '../../schemas/problems';
 
-// --- Service ---
 @Injectable({ providedIn: 'root' })
 export class ApiService {
-  private baseUrl = '/api'; // proxy to backend
+  private baseUrl = '/api'; // proxy
 
   constructor(private http: HttpClient) {}
 
@@ -14,7 +15,6 @@ export class ApiService {
     return this.http.get<{ message: string }>(`${this.baseUrl}/test`);
   }
 
-  // problems
   getProblems(): Observable<Problem[]> {
     return this.http.get<Problem[]>(`${this.baseUrl}/problems`);
   }
@@ -27,7 +27,6 @@ export class ApiService {
     return this.http.post<CreateProblemResultDTO>(`${this.baseUrl}/problems`, problem);
   }
 
-  // solutions
   getSolutions(): Observable<Solution[]> {
     return this.http.get<Solution[]>(`${this.baseUrl}/solutions`);
   }
