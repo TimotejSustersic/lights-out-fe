@@ -1,59 +1,120 @@
-# LightsOutFe
+# Lights Out Game (Frontend)
 
-This project was generated using [Angular CLI](https://github.com/angular/angular-cli) version 20.3.1.
+## Project Description
 
-## Development server
+Angular frontend project for the Lights Out puzzle game. The application allows users to create and solve Lights Out problems with a responsive UI. It integrates with a Quarkus backend via REST APIs to handle game logic and storage.
 
-To start a local development server, run:
+---
 
-```bash
-ng serve
+## 🔧 Tech Stack
+
+| Layer       | Tech                                                                       |
+| ----------- | -------------------------------------------------------------------------- |
+| Framework   | [Angular 20.3.1](https://angular.io/)                                      |
+| UI Styling  | [Tailwind CSS](https://tailwindcss.com/) / [DaisyUI](https://daisyui.com/) |
+| E2E Testing | [Cypress](https://www.cypress.io/)                                         |
+
+---
+
+## ⚙️ Setup & Installation
+
+1. **Clone the repo**
+
+   ```bash
+   git clone https://github.com/TimotejSustersic/lights-out-fe.git
+   ```
+
+2. **Install dependencies**
+
+   ```bash
+   npm install
+   ```
+
+3. **Run the dev server**
+
+   ```bash
+   npm start
+   ```
+
+Access the app at [http://localhost:4200](http://localhost:4200).
+
+The app connects to the backend at `http://localhost:8080` by default.
+If your backend runs elsewhere, update `proxy.conf.json`.
+
+---
+
+## 📂 Project Structure
+
+```
+src/
+ ├── app/
+ │   ├── components/
+ │   │   ├── board/              # Board component
+ │   │   └── event-popup/        # Popup component
+ │   ├── pages/
+ │   │   ├── problems/           # Problem page
+ │   │   └── solutions/          # Solutions page
+ │   ├── services/api.ts         # REST API integration
+ │   ├── app.config.ts           # Routing
+ │   └── theme.service.ts        # Dark mode
+ ├── schemas/                    # DTOs for endpoints
+ │   ├── problems.ts
+ │   └── solutions.ts
 ```
 
-Once the server is running, open your browser and navigate to `http://localhost:4200/`. The application will automatically reload whenever you modify any of the source files.
+---
 
-## Code scaffolding
+## 🚀 Features & Functionality
 
-Angular CLI includes powerful code scaffolding tools. To generate a new component, run:
+* **Problem Creation Page**
+  Users can create new problems on grid sizes ranging from 3×3 to 8×8. Problems are submitted to the backend for validation, after which users are notified whether the problem is solvable. The app also shows how many moves are required to solve the problem and how long the algorithm took to find the solution.
 
-```bash
-ng generate component component-name
-```
+* **Problem Solving & Solutions Page**
+  Displays a table of previously created problems sorted by size, with details like size, difficulty, and creation date. Users can select a problem to play Lights Out interactively. The goal is to turn on all the lights. The UX tracks the number of moves and the time taken to complete the problem. If a problem is too difficult, the user can access the solution.
 
-For a complete list of available schematics (such as `components`, `directives`, or `pipes`), run:
+---
 
-```bash
-ng generate --help
-```
+## 🧪 Testing
 
-## Building
+The frontend is tested with **Cypress** for end-to-end (E2E) testing, ensuring that user interactions and API integrations work as expected. Tests are organized into three suites:
 
-To build the project run:
+* **Board Toggle Functionality** (`board-toggle.cy.ts`):
 
-```bash
-ng build
-```
+  * Tests toggling each cell in a 3×3 grid, verifying correct state changes.
+  * Verifies double-click and rapid-click behavior.
 
-This will compile your project and store the build artifacts in the `dist/` directory. By default, the production build optimizes your application for performance and speed.
+* **Solutions Listing Page** (`solutions-listing.cy.ts`):
 
-## Running unit tests
+  * Ensures problem selection works and displays a placeholder when no selection is made.
+  * Tests problem solutions and completion flow.
+  * Uses `cy.clock` to simulate time passage for timer tests.
 
-To execute unit tests with the [Karma](https://karma-runner.github.io) test runner, use the following command:
+* **Problem Creation Page** (`problem-creation.cy.ts`):
 
-```bash
-ng test
-```
+  * Tests cell toggling, grid reset, and grid size changes (e.g., 4×4 grid has 16 cells).
+  * Verifies submission of solvable/unsolvable problems with appropriate notifications.
+  * Tests loading state during evaluation using delayed API mocks.
 
-## Running end-to-end tests
+### Running Tests
 
-For end-to-end (e2e) testing, run:
+1. **[Run](#️-setup--installation) the server.**
 
-```bash
-ng e2e
-```
+2. **Run Cypress tests:**
 
-Angular CLI does not come with an end-to-end testing framework by default. You can choose one that suits your needs.
+   ```bash
+   npx cypress open
+   ```
 
-## Additional Resources
+---
 
-For more information on using the Angular CLI, including detailed command references, visit the [Angular CLI Overview and Command Reference](https://angular.dev/tools/cli) page.
+## 👨‍💻 Author
+
+**Timotej Šušteršič**
+
+* [GitHub](https://github.com/TimotejSustersic/)
+
+---
+
+## 📄 License
+
+This project is licensed under the MIT License. See the `LICENSE` file for details.
