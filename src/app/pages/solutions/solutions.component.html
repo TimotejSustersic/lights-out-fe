@@ -7,7 +7,7 @@
           <h2 class="text-lg font-semibold">Problems</h2>
         </div>
 
-        <div class="w-full max-w-xl bg-base-200 rounded-2xl shadow-lg overflow-hidden">
+        <div class="w-full max-w-xl bg-base-200 rounded-2xl shadow-lg overflow-hidden" id="problems-table-container">
           <table class="table w-full">
             <thead class="bg-base-300 sticky top-0">
               <tr>
@@ -76,20 +76,20 @@
       </div>
     </td>
 
-    <td class="flex flex-col items-center gap-5">
+    <td class="flex flex-col items-center gap-5" id="game-area">
       @if (selectedProblem()) {
       <!-- Game -->
       <div class="flex items-center gap-4 justify-center select-none text-lg font-semibold">
         <div
           class="flex items-center p-3 bg-base-200 rounded-xl shadow-sm w-[100px] justify-center"
         >
-          <div class="flex items-center gap-1">
+          <div id="countdown" class="flex items-center gap-1">
             <span class="material-symbols-outlined text-yellow-400"> schedule </span>
             <span>{{ formattedTime }}</span>
           </div>
         </div>
         <div class="flex items-center p-3 bg-base-200 rounded-xl shadow-sm w-[80px] justify-center">
-          <div class="flex items-center gap-1">
+          <div id="movescounter" class="flex items-center gap-1">
             <span class="material-symbols-outlined text-indigo-400"> mouse </span>
             <span>{{ moves() }}</span>
           </div>
